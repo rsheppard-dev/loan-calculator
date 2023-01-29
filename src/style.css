@@ -1,0 +1,43 @@
+:root {
+	--dark: '#121212';
+	--light: '#EAEAEA';
+
+	--primary-100: '#8ECAE6';
+	--primary-200: '#219EBC';
+	--primary-300: '#023047';
+
+	--secondary-100: '#FFB703';
+	--secondary-200: '#FB8500';
+
+	--font-primary: 'Poppins', sans-serif;
+	--font-secondary: 'Source Sans Pro', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+tbody,
+button {
+	font-family: var(--font-primary);
+}
+
+label,
+input,
+#error {
+	font-family: var(--font-secondary);
+}
+
+.bg-light {
+	background-color: var(--light);
+}
+
+.odd {
+	font-weight: 100;
+}
+
+.even {
+	font-weight: bold;
+}
