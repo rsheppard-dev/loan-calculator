@@ -43,20 +43,20 @@
 							<label for="loan-amount" class="form-label">Loan Amount:</label>
 							<div class="input-group">
 								<span class="input-group-text">£</span>
-								<input type="number" class="form-control" id="loan-amount">
+								<input type="number" class="form-control" id="loan-amount" value="15000">
 							</div>
 						</div>
 						<div class="mb-3">
 							<label for="payments" class="form-label">Term:</label>
 							<div class="input-group">
-								<input type="number" class="form-control" id="term">
+								<input type="number" class="form-control" id="term" value="60">
 								<span class="input-group-text">Months</span>
 							</div>
 						</div>
 						<div class="mb-3">
 							<label for="rate" class="form-label">Interest Rate:</label>
 							<div class="input-group">
-								<input type="number" class="form-control" id="rate">
+								<input type="number" class="form-control" id="rate" value="3">
 								<span class="input-group-text">%</span>
 							</div>
 						</div>
@@ -67,20 +67,20 @@
 
 				<div class="col">
 					<h2 class="h5 mb-4">Your Monthly Payments</h2>
-					<div class="display-6 mb-4">£0.00</div>
+					<div id="monthly-payment" class="display-6 mb-4">£0.00</div>
 					<table class="table">
 						<tbody>
 							<tr>
 								<th scope="row">Total Principle</th>
-								<td>£0.00</td>
+								<td id="total-principal">£0.00</td>
 							</tr>
 							<tr>
 								<th scope="row">Total Interest</th>
-								<td>£0.00</td>
+								<td id="total-interest">£0.00</td>
 							</tr>
 							<tr>
 								<th scope="row">Total Cost</th>
-								<td>£0.00</td>
+								<td id="total-cost">£0.00</td>
 							</tr>
 						</tbody>
 					</table>

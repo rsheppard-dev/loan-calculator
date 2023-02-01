@@ -13,9 +13,9 @@ function getValues(e: Event): void {
 	const rateInput = document.getElementById('rate') as HTMLInputElement;
 
 	// get values from inputs
-	const loanAmount = parseInt(loanAmountInput.value);
-	const term = parseInt(termInput.value);
-	const rate = parseInt(rateInput.value);
+	const loanAmount = parseFloat(loanAmountInput.value);
+	const term = parseFloat(termInput.value);
+	const rate = parseFloat(rateInput.value);
 
 	// clear any old errors
 	handleError();
@@ -33,19 +33,6 @@ function getValues(e: Event): void {
 	displayPayments(loanAmount, term, rate);
 }
 
-// function to create an array of numbers for each payment
-function getNumberOfPayments(term: number): number[] {
-	const payments: number[] = [];
-
-	// loop through each number from 1 to loan term
-	// add number to payments array
-	for (let i = 1; i <= term; i++) {
-		payments.push(i);
-	}
-
-	return payments;
-}
-
 // function to calculate monthly payment
 function getMonthlyPayment(
 	loanAmount: number,
@@ -61,7 +48,7 @@ function getInterestPayment(balance: number, rate: number): number {
 }
 
 // function to calculate principle payment
-function getPrinciplePayment(
+function getPrincipalPayment(
 	monthlyPayment: number,
 	interestPayment: number
 ): number {
@@ -70,6 +57,18 @@ function getPrinciplePayment(
 
 function displayPayments(loanAmount: number, term: number, rate: number): void {
 	// get dom elements
+	const monthlyPaymentOutput = document.getElementById(
+		'monthly-payment'
+	) as HTMLDivElement;
+	const totalPrincipalOutput = document.getElementById(
+		'total-principal'
+	) as HTMLTableCellElement;
+	const totalInterestOutput = document.getElementById(
+		'total-interest'
+	) as HTMLTableCellElement;
+	const totalCostOutput = document.getElementById(
+		'total-cost'
+	) as HTMLTableCellElement;
 	const tableBody = document.getElementById(
 		'results'
 	) as HTMLTableSectionElement;
@@ -77,57 +76,52 @@ function displayPayments(loanAmount: number, term: number, rate: number): void {
 		'table-row-template'
 	) as HTMLTemplateElement;
 
-	// create array of numbers based on number of payments
-	const payments = getNumberOfPayments(term);
+	// clear any old data in table
+	tableBody.innerHTML = '';
 
 	// get monthly payment
 	const monthlyPayment = getMonthlyPayment(loanAmount, term, rate);
 
-	// get start balance
-	let balance = loanAmount + getInterestPayment(loanAmount, rate);
+	// initialise balance and interest
+	let remainingBalance = loanAmount;
 	let totalInterest = 0;
 
 	// for each due payment...
-	payments.forEach((payment: number) => {
-		const interestPayment = getInterestPayment(balance, rate);
-		const principalPayment = getPrinciplePayment(
-			monthlyPayment,
-			interestPayment
-		);
+	for (let i = 1; i <= term; i++) {
+		// calculate interest and principal
+		const interest = getInterestPayment(remainingBalance, rate);
+		const principal = getPrincipalPayment(monthlyPayment, interest);
 
-		// increase interest total
-		totalInterest += interestPayment;
+		// update balance and interest
+		remainingBalance = remainingBalance - principal;
+		totalInterest += interest;
 
-		// reduce total balance
-		balance = balance - monthlyPayment;
-
-		// clone template to create new row
+		// clone template row
 		const tableRow = document.importNode(rowTemplate.content, true);
 
-		// create an array of columns in the row
+		// get all row columns
 		const rowCols = tableRow.querySelectorAll('td');
 
-		// add month to first column
-		rowCols[0].innerText = payment.toString();
-
-		// add payment to second column
-		rowCols[1].innerText = monthlyPayment.toFixed(2);
-
-		// add principal to third column
-		rowCols[2].innerText = principalPayment.toFixed(2);
-
-		// add interest to forth column
-		rowCols[3].innerText = interestPayment.toFixed(2);
-
-		// add total interest to fifth column
-		rowCols[4].innerText = totalInterest.toFixed(2);
-
-		// add balance to sixth column
-		rowCols[5].innerText = balance.toFixed(2);
+		// update columns with current payment data
+		rowCols[0].innerText = i.toString();
+		rowCols[1].innerText = '£' + monthlyPayment.toFixed(2);
+		rowCols[2].innerText = '£' + principal.toFixed(2);
+		rowCols[3].innerText = '£' + interest.toFixed(2);
+		rowCols[4].innerText = '£' + totalInterest.toFixed(2);
+		rowCols[5].innerText = '£' + remainingBalance.toFixed(2);
 
 		// add row to table
 		tableBody.appendChild(tableRow);
-	});
+	}
+
+	// calculate total cost
+	const totalCost = loanAmount + totalInterest;
+
+	// update payment summary details
+	monthlyPaymentOutput.innerText = '£' + monthlyPayment.toFixed(2);
+	totalPrincipalOutput.innerText = '£' + loanAmount.toFixed(2);
+	totalInterestOutput.innerText = '£' + totalInterest.toFixed(2);
+	totalCostOutput.innerText = '£' + totalCost.toFixed(2);
 }
 
 // function to display and hide error message
