@@ -145,3 +145,5 @@ const submitButton = document.getElementById('submit') as HTMLButtonElement;
 
 // create event listener for when user clicks button
 submitButton.addEventListener('click', getValues);
+
+export {};
