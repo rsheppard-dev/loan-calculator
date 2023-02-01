@@ -6,7 +6,7 @@
 
 Write a mortgage loan calculator application that takes in three parameters:
 
-1. The amount of money loaned in dollars (balance)
+1. The amount of money loaned in pounds (balance)
 2. The time over which the loan will be repaid, in months (term)
 3. The percentage rate at which interest will accrue on the loan (rate)
 
