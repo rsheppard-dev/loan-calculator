@@ -33,11 +33,3 @@ input,
 .bg-light {
 	background-color: var(--light);
 }
-
-.odd {
-	font-weight: 100;
-}
-
-.even {
-	font-weight: bold;
-}
