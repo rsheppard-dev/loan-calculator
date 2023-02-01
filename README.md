@@ -31,6 +31,10 @@ The output should include the following:
 - Event Listeners
 - HTML Templating
 
-### The Tech Stack
+### Tech Stack
 
 HTML5, CSS3, BootStrap, TypeScript
+
+### View Result
+
+[Check out the application](https://rs-loan-calculator.netlify.app/).
