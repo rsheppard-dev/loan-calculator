@@ -20,14 +20,17 @@ function getValues(e: Event): void {
 	// clear any old errors
 	handleError();
 
-	// validate inputs are integers
+	// validate all inputs are numbers
 	if (
-		![loanAmount, term, rate].every((input: number): boolean =>
-			Number.isInteger(input)
+		![loanAmount, term, rate].every(
+			(input: number): boolean => typeof input == 'number' && !isNaN(input)
 		)
-	) {
+	)
 		return handleError('All inputs must contain a valid number!');
-	}
+
+	// check number of months does not include a decimal
+	if (!Number.isInteger(term))
+		return handleError("Number of months can't include decimals!");
 
 	// call displayPayments function to output results
 	displayPayments(loanAmount, term, rate);
