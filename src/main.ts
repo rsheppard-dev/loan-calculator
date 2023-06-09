@@ -96,7 +96,7 @@ function displayPayments(loanAmount: number, term: number, rate: number): void {
 		const principal = getPrincipalPayment(monthlyPayment, interest);
 
 		// update balance and interest
-		remainingBalance = remainingBalance - principal;
+		remainingBalance = Math.abs(remainingBalance - principal);
 		totalInterest += interest;
 
 		// clone template row
